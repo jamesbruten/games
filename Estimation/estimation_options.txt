@@ -1,0 +1,39 @@
+Format: First Number is number of players
+Format: Two lines per game - 1st is trumps for each round, second is number of cards in each round
+Format: Both lines should be same length
+
+4   13 12 11 10 9  8  7  6  5  4  3  2  2  3  4  5  6  7  8  9  10 11 12 13
+4   H  C  D  S  N  H  C  D  S  N  H  C  D  S  H  C  D  S  N  H  C  D  S  N
+4   13 12 11 10 9  8  7  6  5  5  6  7  8  9  10 11 12 13
+4   H  C  D  S  N  H  C  D  S  H  C  D  S  H  C  D  S  N
+4   13 12 11 10 9  8  7  6  5  4  3  2  1  1  1  1  2  3  4  5  6  7  8  9  10 11 12 13
+4   H  C  D  S  N  H  C  D  S  N  H  C  N  N  N  N  D  S  N  H  C  D  S  H  C  D  S  N
+4   13 12 11 10 9  8  7  6  5  4  3  2
+4   H  C  D  S  N  H  C  D  S  N  H  C
+4   13 12 11 10 9  8  7  6  6  7  8  9  10 11 12 13
+4   H  C  D  S  H  C  D  S  N  H  C  D  S  H  C  N
+4   13 12 11 10 9  8  8  9  10 11 12 13
+4   H  C  D  S  N  H  C  D  S  H  C  N
+
+5   10 9  8  7  6  5  4  3  2  2  3  4  5  6  7  8  9  10
+5   H  C  D  S  N  H  C  D  S  H  C  D  S  H  C  D  S  N
+5   10 9  8  7  6  5  4  4  5  6  7  8  9  10
+5   H  C  D  S  N  H  C  D  S  H  C  D  S  N
+5   10 9  8  7  6  5  4  3  2  1  1  1  1  1  2  3  4  5  6  7  8  9  10
+5   H  C  D  S  N  H  C  D  S  N  N  N  N  N  H  C  D  S  H  C  D  S  N
+5   10 9  8  7  6  6  7  8  9  10
+5   H  C  D  S  N  H  C  D  S  N
+5   10 9  8  7  6  5  4  3  2
+5   H  C  D  S  N  H  C  D  S
+
+6   8  7  6  5  4  3  2  2  3  4  5  6  7  8
+6   H  C  D  S  N  H  C  D  S  H  C  D  S  N
+6   8  7  6  5  4  3  2  1  1  1  1  1  1  2  3  4  5  6  7  8
+6   H  C  D  S  N  H  C  N  N  N  N  N  N  D  S  H  C  D  S  N
+6   8  7  6  5  4  4  5  6  7  8
+6   H  C  D  S  N  H  C  D  S  N
+
+7   7  6  5  4  3  2  2  3  4  5  6  7
+7   H  C  D  S  N  H  C  D  S  H  C  N
+7   7  6  5  4  3  2  1  1  1  1  1  1  1  2  3  4  5  6  7
+7   H  C  D  S  H  C  N  N  N  N  N  N  N  D  S  H  C  D  N
