@@ -42,21 +42,15 @@ def resize_image(bgPath):
 
 global dirs, pics, available
 
-try:
-    folder = sys.argv[1]
-except:
-    folder = 'xmas_films'
+options = {'xmas_films': '🎄', 'musicals': '🎶', 'landmarks': '🏰', 'imdb50': '🎥', 'animation': '🎬'}
+folders = []
+for i, item in enumerate(options.keys()):
+    folders.append(str(item))
+    print(f"{i+1} - {item}")
+val = int(input("Choose an option: "))
 
-if folder == 'xmas_films':
-    emoji = '🎄'
-elif folder == 'musicals':
-    emoji = '🎶'
-elif folder == 'landmarks':
-    emoji = '🏰'
-elif folder == 'imdb50':
-    emoji = '🎥'
-elif folder == 'disney':
-    emoji = '🎬'
+folder = folders[val-1]
+emoji = options[folder]
 
 pics = f'./{folder}/'
 dirs = os.listdir(pics)
