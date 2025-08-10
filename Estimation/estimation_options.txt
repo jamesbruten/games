@@ -2,6 +2,12 @@ Format: First Number is number of players
 Format: Two lines per game - 1st is trumps for each round, second is number of cards in each round
 Format: Both lines should be same length
 
+2   13 12 11 10
+2   H  C  D  S
+
+3   13 12 11 10
+3   H  C  D  S
+
 4   13 12 11 10 9  8  7  6  5  4  3  2  2  3  4  5  6  7  8  9  10 11 12 13
 4   H  C  D  S  N  H  C  D  S  N  H  C  D  S  H  C  D  S  N  H  C  D  S  N
 4   13 12 11 10 9  8  7  6  5  5  6  7  8  9  10 11 12 13
