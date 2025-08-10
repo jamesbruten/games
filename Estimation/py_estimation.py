@@ -173,7 +173,11 @@ def print_banner(cards, trumps, players, rnum, tot, called=None):
 
     ui.chip(f"Round: {rnum}/{tot}", color="purple-7", text_color="white")
     ui.chip(f"Cards: {cards}", color="cyan-7", text_color="white")
-    ui.chip(f"Trumps: {trumps}", color="green-7", text_color="white")
+    if trumps in "HD":
+        c = "red"
+    else:
+        c = "black"
+    ui.chip(f"Trumps: {trumps}", color=c, text_color="white")
     ui.chip(f"Dealer: {players[-1].name}", color="amber-7", text_color="white")
     if called is not None:
         diff = cards - called
@@ -238,7 +242,9 @@ def draw_table(players, order, highlight="", mode=None):
     )
 
 
-def draw_score_buttons(ncards, record, unavailable=999, min_score=0):
+def draw_score_buttons(
+    ncards, record, unavailable=999, min_score=0, chosen=None
+):
     with ui.button_group().props("color='blue-8'"):
         btns = []
         for opt in range(min_score, ncards + 1):
@@ -252,27 +258,31 @@ def draw_score_buttons(ncards, record, unavailable=999, min_score=0):
                     ).props("color='blue-8'"),
                 )
             else:
+                props = "color='blue-8'"
+                if chosen is not None and opt == chosen:
+                    props += ' text-color="amber-14"'
                 btn = ui.button(opt, on_click=lambda i=opt: record(i)).props(
-                    "color='blue-8' outline"
+                    props
                 )
                 btns.append(btn)
     return btns
 
 
 def plot_scores(game, rnum):
-    with ui.matplotlib().figure as fig:
-        x_data = list(range(rnum))
-        ax = fig.gca()
-        ax.set_xlim(0, len(game.rounds[0]))
-        ax.set_ylabel("Score")
-        ax.set_xlabel("Round")
-        for name in game.init_order:
-            for player in game.players:
-                if player.name != name:
-                    continue
-                y_data = player.score_record[:rnum]
-                ax.plot(x_data, y_data, "-", label=player.name)
-        ax.legend()
+    with ui.card():
+        with ui.matplotlib(figsize=(6, 4)).figure as fig:
+            x_data = list(range(rnum))
+            ax = fig.gca()
+            ax.set_xlim(0, len(game.rounds[0]))
+            ax.set_ylabel("Score")
+            ax.set_xlabel("Round")
+            for name in game.init_order:
+                for player in game.players:
+                    if player.name != name:
+                        continue
+                    y_data = player.score_record[:rnum]
+                    ax.plot(x_data, y_data, "-", label=player.name)
+            ax.legend()
 
 
 async def take_guesses(cards, game, rnum):
@@ -293,8 +303,8 @@ async def take_guesses(cards, game, rnum):
 
             if game.counter == game.no_players - 1:
                 unavailable = cards - total_called
-            with ui.card():
-                with ui.row():
+            with ui.card().classes("w-full"):
+                with ui.row().classes("w-full"):
                     ui.chip(
                         f"Enter Guess for {player.name}:",
                         color="blue-8",
@@ -323,11 +333,15 @@ async def take_guesses(cards, game, rnum):
 
             if game.counter == game.no_players - 1:
                 page.clear()
-                with ui.card():
-                    cont = ui.button("Continue to Scoring?", color="green")
-                    go_back = ui.button(
-                        "Go Back", color="grey", on_click=lambda: step_back(1)
-                    ).props("rounded")
+                with ui.card().classes("w-full"):
+                    with ui.row().classes("w-full"):
+                        cont = ui.button("Continue to Scoring?", color="green")
+                        ui.space()
+                        go_back = ui.button(
+                            "Go Back",
+                            color="grey",
+                            on_click=lambda: step_back(1),
+                        ).props("rounded")
                 with ui.row():
                     draw_table(game.players, game.init_order, "")
                     plot_scores(game, rnum)
@@ -363,8 +377,8 @@ async def take_scores(cards, game, rnum):
                 game.min_score = 0
                 game.counter -= num
 
-            with ui.card():
-                with ui.row():
+            with ui.card().classes("w-full"):
+                with ui.row().classes("w-full"):
                     ui.chip(
                         f"Enter Number of Tricks won by {player.name}:",
                         color="blue-8",
@@ -381,7 +395,10 @@ async def take_scores(cards, game, rnum):
                 if game.counter == game.no_players - 1:
                     game.min_score = game.max_score
                 score_buttons = draw_score_buttons(
-                    game.max_score, record_option, min_score=game.min_score
+                    game.max_score,
+                    record_option,
+                    min_score=game.min_score,
+                    chosen=player.guess,
                 )
 
             with ui.row():
@@ -394,17 +411,19 @@ async def take_scores(cards, game, rnum):
 
             if game.counter == game.no_players - 1:
                 page.clear()
-                with ui.card():
-                    if rnum == len(game.rounds[0]):
-                        txt = "End the game?"
-                    else:
-                        txt = "Finish this round?"
-                    cont = ui.button(txt, color="green")
-                    go_back = ui.button(
-                        "Go Back",
-                        color="grey",
-                        on_click=lambda: step_back(1, False),
-                    ).props("rounded")
+                with ui.card().classes("w-full"):
+                    with ui.row().classes("w-full"):
+                        if rnum == len(game.rounds[0]):
+                            txt = "End the game?"
+                        else:
+                            txt = "Finish this round?"
+                        cont = ui.button(txt, color="green")
+                        ui.space()
+                        go_back = ui.button(
+                            "Go Back",
+                            color="grey",
+                            on_click=lambda: step_back(1, False),
+                        ).props("rounded")
                 with ui.row():
                     draw_table(game.players, game.init_order, "")
                     plot_scores(game, rnum + 1)
